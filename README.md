@@ -7,7 +7,7 @@ git clone https://github.com/RyanDsilva/bart-finetuning-ami.git
 
 pip install -r requirements.txt
 
-python run_bart_sum.py \
+python train.py \
 --data_dir=./data \
 --model_type=bart \
 --model_name_or_path=bart-large \
