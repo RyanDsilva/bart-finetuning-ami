@@ -290,7 +290,7 @@ def generic_train(model, args):
             "Output directory ({}) already exists and is not empty.".format(args.output_dir))
 
     checkpoint_callback = pl.callbacks.ModelCheckpoint(
-        filepath=args.output_dir, monitor="val_loss", mode="min", save_top_k=2
+        filepath=args.output_dir, monitor="val_loss", mode="min", save_top_k=1
     )
 
     train_params = dict(
