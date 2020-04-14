@@ -25,7 +25,7 @@ class SummarizationDataset(Dataset):
         data_dir="./data/",
         type_path="train",
         max_source_length=1024,
-        max_target_length=128,
+        max_target_length=96,
     ):
         super().__init__()
         self.tokenizer = tokenizer

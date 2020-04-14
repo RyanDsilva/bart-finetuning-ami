@@ -50,11 +50,11 @@ class BartSystem(BaseTransformer):
         generated_ids = self.model.generate(
             source_ids,
             source_mask,
-            num_beams=2,
-            max_length=64,
+            num_beams=1,
+            max_length=96,
             repetition_penalty=2.5,
             length_penalty=1.5,
-            early_stopping=True,
+            early_stopping=False,
         )
         preds = [
             self.tokenizer.decode(
