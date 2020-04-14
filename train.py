@@ -30,25 +30,17 @@ class BartSystem(BaseTransformer):
         lm_labels[y[:, 1:] == pad_token_id] = -100
         outputs = self(source_ids, attention_mask=source_mask,
                        decoder_input_ids=y_ids, lm_labels=lm_labels,)
-
         loss = outputs[0]
-
         return loss
 
     def training_step(self, batch, batch_idx):
         loss = self._step(batch)
-
         tensorboard_logs = {"train_loss": loss}
         return {"loss": loss, "log": tensorboard_logs}
 
     def validation_step(self, batch, batch_idx):
         loss = self._step(batch)
         return {"val_loss": loss}
-
-    def validation_end(self, outputs):
-        avg_loss = torch.stack([x["val_loss"] for x in outputs]).mean()
-        tensorboard_logs = {"val_loss": avg_loss}
-        return {"avg_val_loss": avg_loss, "log": tensorboard_logs}
 
     def test_step(self, batch, batch_idx):
         pad_token_id = self.tokenizer.pad_token_id
@@ -72,8 +64,12 @@ class BartSystem(BaseTransformer):
         target = [self.tokenizer.decode(
             t, skip_special_tokens=True, clean_up_tokenization_spaces=True) for t in y]
         loss = self._step(batch)
-
         return {"val_loss": loss, "preds": preds, "target": target}
+
+    def validation_end(self, outputs):
+        avg_loss = torch.stack([x["val_loss"] for x in outputs]).mean()
+        tensorboard_logs = {"val_loss": avg_loss}
+        return {"avg_val_loss": avg_loss, "log": tensorboard_logs}
 
     def test_end(self, outputs):
         return self.validation_end(outputs)

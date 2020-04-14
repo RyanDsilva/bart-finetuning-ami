@@ -14,7 +14,7 @@ python train.py \
 --learning_rate=3e-5 \
 --train_batch_size=8 \
 --eval_batch_size=8 \
---output_dir=./results \
+--output_dir=./outputs \
 --do_train
 --do_predict
 ```

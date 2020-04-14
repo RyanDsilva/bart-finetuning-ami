@@ -107,7 +107,6 @@ class BaseTransformer(pl.LightningModule):
     def get_tqdm_dict(self):
         tqdm_dict = {"loss": "{:.3f}".format(
             self.trainer.avg_loss), "lr": self.lr_scheduler.get_last_lr()[-1]}
-
         return tqdm_dict
 
     def test_step(self, batch, batch_nb):
@@ -302,6 +301,7 @@ def generic_train(model, args):
         gradient_clip_val=args.max_grad_norm,
         checkpoint_callback=checkpoint_callback,
         callbacks=[LoggingCallback()],
+        auto_lr_find='learning_rate',
     )
 
     if args.fp16:
