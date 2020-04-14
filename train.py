@@ -50,8 +50,8 @@ class BartSystem(BaseTransformer):
         generated_ids = self.model.generate(
             source_ids,
             source_mask,
-            num_beams=4,
-            max_length=128,
+            num_beams=2,
+            max_length=64,
             repetition_penalty=2.5,
             length_penalty=1.5,
             early_stopping=True,
@@ -138,7 +138,7 @@ class BartSystem(BaseTransformer):
         )
         parser.add_argument(
             "--max_target_length",
-            default=128,
+            default=96,
             type=int,
             help="The maximum total input sequence length after tokenization. Sequences longer "
             "than this will be truncated, sequences shorter will be padded.",
